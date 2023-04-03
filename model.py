@@ -26,7 +26,7 @@ class Modeler():
         """
         
         """
-        self.rawdata_df = pd.read_csv(os.path.join(os.getcwd(), "data", "data_daily.csv"))
+        self.rawdata_df = pd.read_csv(os.path.join(os.getcwd(), "data_daily.csv"))
         self.model_params = np.empty((0, 3))
 
     def group_data_by_month(self):
