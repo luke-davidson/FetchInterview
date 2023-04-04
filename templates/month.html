@@ -2,23 +2,29 @@
 
 {% block content %}
 
-<form action="/inputmonth" method="POST">
-  <label for="month">Select a month:</label>
-  <select id="month" name="month">
-    <option value="13-January">01 - January</option>
-    <option value="14-February">02 - February</option>
-    <option value="15-March">03 - March</option>
-    <option value="16-April">04 - April</option>
-    <option value="17-May">05 - May</option>
-    <option value="18-June">06 - June</option>
-    <option value="19-July">07 - July</option>
-    <option value="20-August">08 - August</option>
-    <option value="21-September">09 - September</option>
-    <option value="22-October">10 - October</option>
-    <option value="23-November">11 - November</option>
-    <option value="24-December">12 - December</option>
-  </select>
-  <input type="submit">
-</form>
+<h3>Problem Statement:</h3>
+<p>At fetch, we are monitoring the number of the scanned receipts to our app on a daily base as one of our KPIs. From business standpoint, we sometimes need to predict the possible number of the scanned receipts for a given future month.</p>
+<p>The following link provides the number of the observed scanned receipts each day for the year 2021. Based on this prior knowledge, please develop an algorithm which can predict the approximate number of the scanned receipts for each month of 2022.</p>
+
+<h3>Model Input:</h3>
+    <p>Select a month of 2022 to obtain a prediction for the number of receipts to be scanned:</p>
+        <form action="/inputmonth" method="POST">
+            <label for="month"></label>
+            <select id="month" name="month">
+            <option value="13-January">01 - January</option>
+            <option value="14-February">02 - February</option>
+            <option value="15-March">03 - March</option>
+            <option value="16-April">04 - April</option>
+            <option value="17-May">05 - May</option>
+            <option value="18-June">06 - June</option>
+            <option value="19-July">07 - July</option>
+            <option value="20-August">08 - August</option>
+            <option value="21-September">09 - September</option>
+            <option value="22-October">10 - October</option>
+            <option value="23-November">11 - November</option>
+            <option value="24-December">12 - December</option>
+            </select>
+            <input type="submit" class="form-submit-button" value="Predict!">
+        </form>
 
 {% endblock %}

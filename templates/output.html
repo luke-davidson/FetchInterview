@@ -2,8 +2,9 @@
 
 {% block content %}
 
-<h2>PRED: {{pred}} receipts for {{mon}}, 2022!</h2>
+<h3>Prediction:</h3>
+<p class=center_pred>An estimated <span style="color:orange;font-weight:bold;font-size:2em">  {{pred}}  </span> receipts will be scanned in {{mon}}, 2022!</p>
 <img src="fig.png" alt="Figure" width="500" height="333">
-<input type="button" onclick="history.back()" value="Input Another Month" />
+<input type="button" class="form-pred-button" onclick="history.back()" value="Make Another Prediction!" />
 
 {% endblock %}
