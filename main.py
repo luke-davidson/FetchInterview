@@ -10,8 +10,8 @@ from model import Modeler
 model = Modeler()
 model()
 
+# Flask
 app = Flask(__name__)
-
 @app.route("/")
 def index():
     return render_template("month.html")
@@ -22,10 +22,9 @@ def inputmonth():
         return render_template("month.html")
     if request.method == "POST":
         response = request.form.get("month").split("-")
-        # month_num, month_name = response.split("-")
-        # pred = model.predict(int(month_num))
-        return render_template("output.html", pred=response)
-
+        month_num, month_name = response
+        pred = model.predict(int(month_num))
+        return render_template("output.html", pred=pred, mon=month_name)
 
 
 

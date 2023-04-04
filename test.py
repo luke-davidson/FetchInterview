@@ -15,6 +15,8 @@
 # print(np.argmax([1, 5, 6]))
 
 string = "01-Jan"
-num, name = string.split('-')
+respo = string.split('-')
+print(respo)
+num, name = respo
 print(num)
 print(name)

@@ -26,8 +26,8 @@ class Modeler():
         """
         
         """
-        path, _ = os.path.split(__file__)
-        self.rawdata_df = pd.read_csv(os.path.join(path, "data_daily.csv"))
+        self.path, _ = os.path.split(__file__)
+        self.rawdata_df = pd.read_csv(os.path.join(self.path, "data_daily.csv"))
         self.model_params = np.empty((0, 3))
 
     def group_data_by_month(self):
@@ -63,7 +63,7 @@ class Modeler():
         """
         m, b = self.final_model_params
         self.pred = m*date + b
-        # self.plot_data(date)
+        self.plot_data(date)
         return int(self.pred)
 
     def plot_data(self, date):
@@ -76,7 +76,7 @@ class Modeler():
         plt.title(f"PREDICTION: {int(self.pred)} Receipts to be Scanned in {date-12}/2022")
         plt.legend(["Data", "Regression Line", f"Prediction = {int(self.pred)} Receipts"])
         plt.grid()
-        plt.show()
+        plt.savefig(os.path.join(self.path, "fig.png"))
     
     def run_kfold_crossval(self, k=6):
         """
