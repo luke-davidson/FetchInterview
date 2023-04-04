@@ -1,0 +1,27 @@
+{% extends "template.html"%}
+
+{% block content %}
+<h2>The select Element</h2>
+
+<p>The select element defines a drop-down list:</p>
+
+<form method="POST" action="/inputmonth">
+  <label for="month">Select a month:</label>
+  <select id="month" name="month">
+    <option value="13">01 - January</option>
+    <option value="14">02 - February</option>
+    <option value="15">03 - March</option>
+    <option value="16">04 - April</option>
+    <option value="17">05 - May</option>
+    <option value="18">06 - June</option>
+    <option value="19">07 - July</option>
+    <option value="20">08 - August</option>
+    <option value="21">09 - September</option>
+    <option value="22">10 - October</option>
+    <option value="23">11 - November</option>
+    <option value="24">12 - December</option>
+  </select>
+  <input type="submit">
+</form>
+
+{% endblock %}
