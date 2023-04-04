@@ -1,5 +1,8 @@
-{% extends "template.html"%}
+{% extends "template.html" %}
 
-{%block content %}
-<h2>PRED: {%pred%}</h2>
-{%endblock%}
+{% block content %}
+
+<h2>PRED: {{pred}} receipts for {{mon}}, 2022!</h2>
+<input type="button" onclick="history.back()" value="Input Another Month" />
+
+{% endblock %}

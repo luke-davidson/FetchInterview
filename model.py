@@ -26,7 +26,8 @@ class Modeler():
         """
         
         """
-        self.rawdata_df = pd.read_csv(os.path.join(os.getcwd(), "data_daily.csv"))
+        path, _ = os.path.split(__file__)
+        self.rawdata_df = pd.read_csv(os.path.join(path, "data_daily.csv"))
         self.model_params = np.empty((0, 3))
 
     def group_data_by_month(self):
@@ -62,8 +63,8 @@ class Modeler():
         """
         m, b = self.final_model_params
         self.pred = m*date + b
-        # print(f"PRED: {self.pred} receipts.")
-        self.plot_data(date)
+        # self.plot_data(date)
+        return int(self.pred)
 
     def plot_data(self, date):
         plt.scatter(self.month_df.index, self.month_df.Receipt_Count, s=10)

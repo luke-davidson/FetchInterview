@@ -14,16 +14,17 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("template.html")
+    return render_template("month.html")
 
 @app.route("/inputmonth", methods=["GET", "POST"])
 def inputmonth():
     if request.method == "GET":
         return render_template("month.html")
-    elif request.method == "POST":
-        month_num = int(request.form.get("month"))
-        pred = model.predict(month_num)
-        return render_template("output.html", pred=pred)
+    if request.method == "POST":
+        response = request.form.get("month").split("-")
+        # month_num, month_name = response.split("-")
+        # pred = model.predict(int(month_num))
+        return render_template("output.html", pred=response)
 
 
 

@@ -1,4 +1,4 @@
-import numpy as np
+# import numpy as np
 
 # emp = np.empty((0, 3))
 
@@ -12,4 +12,9 @@ import numpy as np
 # print(emp)
 
 
-print(np.argmax([1, 5, 6]))
+# print(np.argmax([1, 5, 6]))
+
+string = "01-Jan"
+num, name = string.split('-')
+print(num)
+print(name)
