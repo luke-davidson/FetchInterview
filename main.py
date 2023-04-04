@@ -7,10 +7,6 @@ author: Luke Davidson
 """
 
 # Import dependencies
-import numpy as np
-import pandas as pd
-import os
-import matplotlib.pyplot as plt
 from flask import Flask, render_template, request
 
 # Import and create model
