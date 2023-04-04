@@ -156,7 +156,9 @@ class Modeler():
         plt.plot([1, date], [self.final_model_params[0] + self.final_model_params[1], self.final_model_params[0]*date + self.final_model_params[1]], c='g')
         plt.scatter(date, self.pred, c='r', marker='x', s=50)
         plt.plot([date, date], [self.pred, min(self.month_df.Receipt_Count)], 'k--')
-        plt.xlabel("Number of Months since Jan 2021")
+        all = ["Jan 21", "Feb 21", "Mar 21", "Apr 21", "May 21", "Jun 21", "Jul 21", "Aug 21", "Sep 21", "Oct 21", "Nov 21", "Dec 21", 
+                "Jan 22", "Feb 22", "Mar 22", "Apr 22", "May 22", "Jun 22", "Jul 22", "Aug 22", "Sep 22", "Oct 22", "Nov 22", "Dec 22"]
+        plt.xticks(np.arange(1, date+2), all[0:date+1], rotation=45)
         plt.ylabel("# Receipts Scanned per Month")
         plt.legend(["2021 Data", "Regression Line", "Prediction"])
         plt.grid()
@@ -173,7 +175,3 @@ class Modeler():
         self.run_kfold_crossval()
         self.select_model()
         self.calc_offset()
-
-model = Modeler()
-model()
-model.predict(18)
