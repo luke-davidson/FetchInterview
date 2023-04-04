@@ -37,10 +37,10 @@ def inputmonth():
         month_num, month_name = response
 
         # Input in to model
-        pred = model.predict(int(month_num))
+        pred, encoded_img = model.predict(int(month_num))
 
         # Render output
-        return render_template("output.html", pred=pred, mon=month_name)
+        return render_template("output.html", pred=pred, mon=month_name, im=encoded_img)
 
 # Run
 if __name__ == "__main__":

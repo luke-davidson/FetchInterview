@@ -11,6 +11,8 @@ import numpy as np
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
+import base64
+from io import BytesIO
 
 # Create main class
 class Modeler():
@@ -98,9 +100,31 @@ class Modeler():
         min_index = np.argmin(self.model_params[:, 2])
         self.final_model_params = self.model_params[min_index, :-1]
 
+    def calc_offset(self):
+        """
+        Calculates the average offsets due to the varying number of days in a month.
+
+        Returns:
+            self.offsets --> np.array; array holding the average offsets to adjust the predictions
+        """
+        m, b = self.final_model_params
+        self.offsets = np.zeros((3))
+        for month in self.month_df.index:
+            if month == 2:
+                # Feb - 28 days
+                self.offsets[0] += self.month_df.Receipt_Count[month] - (m*month + b)
+            elif month in [4, 6, 9, 11]:
+                # 30 days
+                self.offsets[1] += self.month_df.Receipt_Count[month] - (m*month + b)
+            else:
+                # 31 days
+                self.offsets[2] += self.month_df.Receipt_Count[month] - (m*month + b)
+        self.offsets[1] /= 4
+        self.offsets[2] /= 7
+
     def predict(self, date):
         """
-        Main prediction method, called by .
+        Main prediction method. Calculates a prediction based on the final model parameters and adjusts the prediction based on the number of days in the inputted month.
 
         Args:
             date --> int; Number of months since Jan 2021
@@ -111,23 +135,35 @@ class Modeler():
         """
         m, b = self.final_model_params
         self.pred = m*date + b
-        self.render_plot(date)
-        return int(self.pred)
+        if date == 14:
+            # Feb - 28 days
+            self.pred += self.offsets[0]
+        elif date in [16, 18, 21, 23]:
+            # 30 days
+            self.pred += self.offsets[1]
+        else:
+            # 31 days
+            self.pred += self.offsets[2]
+        encoded_img = self.render_plot(date)
+        return int(self.pred), encoded_img
 
     def render_plot(self, date):
         """
-        Plot rendering method. Renders a plot including the raw data, regression line, and future prediction
+        Plot rendering method. Renders and encodes a plot including the raw data, regression line, and future prediction
         """
+        fig = plt.figure()
         plt.scatter(self.month_df.index, self.month_df.Receipt_Count, s=10)
         plt.plot([1, date], [self.final_model_params[0] + self.final_model_params[1], self.final_model_params[0]*date + self.final_model_params[1]], c='g')
         plt.scatter(date, self.pred, c='r', marker='x', s=50)
         plt.plot([date, date], [self.pred, min(self.month_df.Receipt_Count)], 'k--')
-        plt.xlabel("Month Number (# Months since Jan 2021)")
+        plt.xlabel("Number of Months since Jan 2021")
         plt.ylabel("# Receipts Scanned per Month")
-        plt.title(f"PREDICTION: {int(self.pred)} Receipts to be Scanned in {date-12}/2022")
-        plt.legend(["Data", "Regression Line", f"Prediction = {int(self.pred)} Receipts"])
+        plt.legend(["2021 Data", "Regression Line", "Prediction"])
         plt.grid()
-        plt.savefig(os.path.join(self.path, "fig.png"))
+        tmpfile = BytesIO()
+        fig.savefig(tmpfile, format='png')
+        encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
+        return encoded
 
     def __call__(self):
         """
@@ -136,3 +172,8 @@ class Modeler():
         self.group_data_by_month()
         self.run_kfold_crossval()
         self.select_model()
+        self.calc_offset()
+
+model = Modeler()
+model()
+model.predict(18)
