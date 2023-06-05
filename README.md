@@ -1,4 +1,4 @@
-# Fetch - MLE Take Home Assignment
+# Monthly Receipt Scan Prediction Model
 This repo holds all files created to create a future monthly receipt scanning prediction regression model.
 
 author: Luke Davidson - davidson.luked@gmail.com - (978) 201-2693
